@@ -216,7 +216,7 @@ func (n *ClientNode) ExecuteTransactionAsLeader() {
 		if err != nil {
 			fmt.Printf("[2PC-LEADER] Node %d unreachable! 2PC failing.\n", peer.ID)
 			allVotedYes = false
-			break
+			continue
 		}
 		
 		var vote bool
@@ -225,7 +225,7 @@ func (n *ClientNode) ExecuteTransactionAsLeader() {
 			fmt.Printf("[2PC-LEADER] Node %d voted NO or failed: %v\n", peer.ID, err)
 			allVotedYes = false
 			peerClient.Close()
-			break
+			continue
 		}
 		fmt.Printf("[2PC-LEADER] Node %d voted YES.\n", peer.ID)
 		peerClient.Close()

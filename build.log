@@ -1,0 +1,2 @@
+# command-line-arguments
+client/main.go:141:2: declared and not used: higherNodesExist

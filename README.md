@@ -72,13 +72,14 @@ go run server/main.go -port 8080
 Note down Laptop A's IP address (e.g., `192.168.1.100`).
 
 ### 2. Setup the Clients (Laptops 1 to 5)
-On each of the other laptops, run the client, telling it where the server is, and defining its own port for peer-to-peer RPC communication.
-```bash
-# On Laptop 1
-go run client/main.go -server 192.168.1.100:8080 -port 9001
+On each client laptop, run the client node. You must specify the `server` IP, the client's **own actual IP address** (`address`), and what `port` it will use.
 
-# On Laptop 2
-go run client/main.go -server 192.168.1.100:8080 -port 9002
+```bash
+# On Laptop 1 (Replace 192.168.1.101 with Laptop 1's actual IP)
+go run client/main.go -server 192.168.1.100:8080 -address 192.168.1.101 -port 9001
+
+# On Laptop 2 (Replace 192.168.1.102 with Laptop 2's actual IP)
+go run client/main.go -server 192.168.1.100:8080 -address 192.168.1.102 -port 9002
 
 # ... run similarly on all 5 laptops, ensuring they are on the same Wi-Fi/Network.
 ```

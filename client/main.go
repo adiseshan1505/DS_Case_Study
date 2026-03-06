@@ -265,12 +265,24 @@ func (n *ClientNode) ExecuteTransactionAsLeader() {
 	fmt.Println("[LOCK] Released Distributed Lock.\n")
 }
 
+// getLocalIP automatically determines the outbound IP address of the machine
+func getLocalIP() string {
+	conn, err := net.Dial("udp", "8.8.8.8:80")
+	if err != nil {
+		return "127.0.0.1"
+	}
+	defer conn.Close()
+	localAddr := conn.LocalAddr().(*net.UDPAddr)
+	return localAddr.IP.String()
+}
+
 func main() {
 	serverHost := flag.String("server", "127.0.0.1:8080", "Server Address")
 	portStr := flag.String("port", "9001", "My Client RPC Port")
+	myIP := flag.String("address", getLocalIP(), "My Client IP Address (Use actual IP across different laptops)")
 	flag.Parse()
 
-	addr := "127.0.0.1:" + *portStr
+	addr := *myIP + ":" + *portStr
 	node := NewClientNode(addr, *serverHost)
 
 	// Start P2P RPC Listening
